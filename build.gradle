@@ -28,9 +28,16 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 
-    implementation group: 'org.springframework', name: 'spring-core', version: '5.3.34'
-    implementation group: 'org.springframework', name: 'spring-context', version: '5.3.34'
-    testImplementation group: 'org.springframework', name: 'spring-test', version: '5.3.34'
+    implementation group: 'org.springframework', name: 'spring-core', version: '5.3.24'
+    implementation group: 'org.springframework', name: 'spring-context', version: '5.3.24'
+    testImplementation group: 'org.springframework', name: 'spring-test', version: '5.3.24'
+    implementation group: 'org.springframework', name: 'spring-webmvc', version: '5.3.24'
+    implementation group: 'org.springframework', name: 'spring-jdbc', version: '5.3.24'
+    implementation group: 'org.springframework', name: 'spring-tx', version: '5.3.24'
+    implementation group: 'org.mybatis', name: 'mybatis', version: '3.5.14'
+    // https://mvnrepository.com/artifact/org.mybatis/mybatis-spring
+    implementation group: 'org.mybatis', name: 'mybatis-spring', version: '2.1.2'
+
 
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.32'
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.32'
@@ -40,6 +47,11 @@ dependencies {
     implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.23.1'
     implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.23.1'
     testImplementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.23.1'
+
+    implementation group: 'com.zaxxer', name: 'HikariCP', version: '5.1.0'
+    implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.3.3'
+
+
 }
 
 test {
