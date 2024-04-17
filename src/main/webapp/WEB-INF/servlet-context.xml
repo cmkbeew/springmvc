@@ -18,4 +18,14 @@
     </bean>
 
     <context:component-scan base-package="org.fullstack4.springmvc.controller" />
+
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="formatters">
+            <set>
+                <bean class="org.fullstack4.springmvc.controller.formatter.LocalDateFormatter" />
+            </set>
+        </property>
+    </bean>
+
+    <mvc:annotation-driven conversion-service="conversionService" />
 </beans>
