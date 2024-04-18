@@ -34,5 +34,6 @@
     <mybatis:scan base-package="org.fullstack4.springmvc.mapper"></mybatis:scan>
 
     <context:component-scan base-package="org.fullstack4.springmvc.config" />
+    <context:component-scan base-package="org.fullstack4.springmvc.service" />
 
 </beans>
