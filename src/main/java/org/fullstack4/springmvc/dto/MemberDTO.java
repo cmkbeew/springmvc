@@ -16,14 +16,31 @@ public class MemberDTO {
 
     @NotBlank
     private String user_id;
-    private String name;
+
+    @Builder.Default
+    @NotBlank
+    private String name = "";
 
     @NotBlank
     private String pwd;
+
+    @NotBlank
+    private String email;
+
     private String jumin;
+
+    @NotBlank
     private String addr1;
+
+    @NotBlank
     private String addr2;
+
+    @NotBlank
     private String birthday;
+
+    @NotBlank
+    private String interest;
+
     private String jobCode;
     private int mileage;
     private String user_state;

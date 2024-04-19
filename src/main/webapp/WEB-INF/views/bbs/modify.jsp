@@ -7,34 +7,52 @@
     <meta charset="UTF-8"/>
 </head>
 <body>
-<h1>BBS >>>> Modify</h1>
+<div class="container-md mt-3">
+    <h1 style="text-align: center">게시글 수정</h1>
+    <form name="frmModify" id="frmModify" method="post" action="/bbs/modify">
+        <input type="hidden" name="idx" id="idx" value="${bbsDTO.idx}" />
+        <div class="mb-3">
+            <label for="user_id" class="form-label">아이디</label>
+            <input type="text" class="form-control" id="user_id" name="user_id" value="${bbsDTO.user_id}" placeholder="아이디" >
+            <div id="div_err_user_id" style="display: none"></div>
+        </div>
 
-<form name="frmModify" id="frmModify" method="post" action="/bbs/modify">
-    <input type="hidden" name="idx" id="idx" value="${bbsDTO.idx}" />
-    <div>
-        <span>아이디 : </span> <input type="text" name="user_id" id="user_id" value="${bbsDTO.user_id}" maxlength="20" readonly />
-    </div>
-    <div>
-        <span>제목 : </span> <input type="text" name="title" id="title" value="${bbsDTO.title}" maxlength="100" />
-    </div>
-    <div>
-        <span>내용 : </span> <textarea name="content" id="content" rows="10" cols="60">${bbsDTO.content}</textarea>
-    </div>
-    <div>
-        <span>출력날짜 : </span> <input type="date" name="display_date" id="display_date" value="${bbsDTO.display_date}" />
-    </div>
-    <div>
-        <span>관심사항 : </span>
-        <span>스포츠<input type="checkbox" name="interest" id="interest_0" value="스포츠" <c:out value="${bbsDTO.interest.contains(\"스포츠\") ? 'checked' : ''}"></c:out> /></span>
-        <span>여행<input type="checkbox" name="interest" id="interest_1" value="여행" <c:out value="${bbsDTO.interest.contains(\"여행\") ? 'checked' : ''}"></c:out> /></span>
-        <span>영화<input type="checkbox" name="interest" id="interest_2" value="영화" <c:out value="${bbsDTO.interest.contains(\"영화\") ? 'checked' : ''}"></c:out> /></span>
-        <span>음악<input type="checkbox" name="interest" id="interest_3" value="음악" <c:out value="${bbsDTO.interest.contains(\"음악\") ? 'checked' : ''}"></c:out> /></span>
-        <div id="div_err_interest" style="display: none;"></div>
-    </div>
-    <div>
-        <button type="submit">글 수정</button>
-        <button type="button" onclick="location.href='/bbs/view?idx=${bbsDTO.idx}'">뒤로가기</button>
-    </div>
-</form>
+        <div class="mb-3">
+            <label for="title" class="form-label">제목</label>
+            <input type="text" class="form-control" id="title" name="title" value="${bbsDTO.title}" placeholder="제목">
+            <div id="div_err_title" style="display: none"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="content" class="form-label">내용</label>
+            <textarea class="form-control" id="content" name="content" rows="3" placeholder="내용을 입력하세요.">${bbsDTO.content}</textarea>
+            <div id="div_err_content" style="display: none;"></div>
+        </div>
+
+        <div class="mb-3">
+            <span>출력날짜 : </span> <input type="date" name="display_date" id="display_date" value="${bbsDTO.display_date}" />
+            <div id="div_err_display_date" style="display: none;"></div>
+        </div>
+
+        <div for="content" class="form-label">관심사항</div>
+        <div class="btn-group mb-3" role="group" aria-label="Basic checkbox toggle button group">
+            <input type="checkbox" class="btn-check" id="interest_0" name="interest" value="스포츠" <c:out value="${bbsDTO.interest.contains(\"스포츠\") ? 'checked' : ''}"></c:out>>
+            <label class="btn btn-outline-dark" for="interest_0">스포츠</label>
+
+            <input type="checkbox" class="btn-check" id="interest_1" name="interest" value="여행" <c:out value="${bbsDTO.interest.contains(\"여행\") ? 'checked' : ''}"></c:out>>
+            <label class="btn btn-outline-dark" for="interest_1">여행</label>
+
+            <input type="checkbox" class="btn-check" id="interest_2" name="interest" value="영화" <c:out value="${bbsDTO.interest.contains(\"영화\") ? 'checked' : ''}"></c:out>>
+            <label class="btn btn-outline-dark" for="interest_2">영화</label>
+
+            <input type="checkbox" class="btn-check" id="interest_3" name="interest" value="음악" <c:out value="${bbsDTO.interest.contains(\"음악\") ? 'checked' : ''}"></c:out>>
+            <label class="btn btn-outline-dark" for="interest_3">음악</label>
+        </div>
+        <div class="d-grid gap-2">
+            <button class="btn btn-primary" type="submit">수정하기</button>
+            <button class="btn btn-secondary" type="button" onclick="location.href='/bbs/view?idx=${bbsDTO.idx}'">뒤로가기</button>
+        </div>
+    </form>
+</div>
 </body>
 </html>

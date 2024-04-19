@@ -41,7 +41,7 @@ public class BbsController {
 
         BbsDTO bbsDTO = bbsServiceIf.view(idx);
 
-        model.addAttribute("bbs", bbsDTO);
+        model.addAttribute("bbsDTO", bbsDTO);
         log.info("============================");
     }
 
@@ -105,7 +105,7 @@ public class BbsController {
         if(result > 0) {
             return "redirect:/bbs/view?idx=" + bbsDTO.getIdx();
         } else {
-            return "/bbs/modify";
+            return "/bbs/modify?idx=" + bbsDTO.getIdx();
         }
     }
 

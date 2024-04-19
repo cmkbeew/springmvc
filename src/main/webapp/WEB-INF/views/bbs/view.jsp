@@ -6,34 +6,46 @@
     <meta charset="UTF-8"/>
 </head>
 <body>
-<h1>BBS >>>> View</h1>
-<form name="frmDelete" id="frmDelete" method="post" action="/bbs/delete">
-    <input type="hidden" name="idx" id="idx" value="${bbs.idx}" />
-    <div>
-        <span>인덱스 : ${bbs.idx}</span>
+<h1 style="text-align: center">게시글 상세</h1>
+<div class="container-md card mb-4">
+    <div class="card-body">
+        <form name="frmDelete" id="frmDelete" method="post" action="/bbs/delete">
+            <input type="hidden" name="idx" id="idx" value="${bbsDTO.idx}" />
+            <table class="table user-view-table m-0">
+                <tbody>
+                <tr>
+                    <td>아이디 :</td>
+                    <td>${bbsDTO.user_id}</td>
+                </tr>
+                <tr>
+                    <td>제목 :</td>
+                    <td>${bbsDTO.title}</td>
+                </tr>
+                <tr>
+                    <td>내용 :</td>
+                    <td>
+                        <textarea style="width: 100%; height: 200px; border: none; outline: none; resize: none" readonly>${bbsDTO.content}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>출력일 :</td>
+                    <td>${bbsDTO.display_date}</td>
+                </tr>
+                <tr>
+                    <td>관심사항:</td>
+                    <td>${bbsDTO.interest}</td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
     </div>
-    <div>
-        <span>아이디 : ${bbs.user_id}</span>
+    <div class="d-grid gap-2 d-md-block mb-3" style="margin: 0 auto;">
+        <button type="button" class="btn btn-outline-success" onclick="location.href='/bbs/modify?idx=${bbsDTO.idx}'">수정</button>
+        <button type="button" class="btn btn-outline-danger" onclick="goDelete()">삭제</button>
+        <button type="button" class="btn btn-outline-secondary" onclick="location.href='/bbs/list'">목록</button>
     </div>
-    <div>
-        <span>제목 : ${bbs.title} </span>
-    </div>
-    <div>
-        <span>내용 : ${bbs.content}</span>
-    </div>
-    <div>
-        <span>출력날짜 : ${bbs.display_date}</span>
-    </div>
-    <div>
-        <span>관심사항 : ${bbs.interest}</span>
-    </div>
+</div>
 
-    <div>
-        <button type="button" onclick="location.href='/bbs/list'">목록</button>
-        <button type="button" onclick="location.href='/bbs/modify?idx=${bbs.idx}'">수정</button>
-        <button type="button" onclick="goDelete()">삭제</button>
-    </div>
-</form>
 <script>
     function goDelete() {
         const frm = document.getElementById("frmDelete");
