@@ -38,7 +38,7 @@
 
                                 <div class="d-flex justify-content-evenly">
                                     <div><input type="checkbox" name="save_id" id="save_id" <c:if test="${save_id != null}">checked</c:if> />아이디 저장</div>
-                                    <div><input type="checkbox" name="auto_login" id="auto_login" />자동 로그인</div>
+                                    <div><input type="checkbox" name="auto_login" id="auto_login" <c:if test="${auto_login != null}">checked</c:if> />자동 로그인</div>
                                 </div>
 
                                 <c:if test="${login_err_msg != null}">

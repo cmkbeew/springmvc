@@ -20,5 +20,5 @@ public class LoginDTO {
     private String pwd;
 
     private String save_id;
-    private String auto_save;
+    private String auto_login;
 }

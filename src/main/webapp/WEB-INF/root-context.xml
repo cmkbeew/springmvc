@@ -35,5 +35,6 @@
 
     <context:component-scan base-package="org.fullstack4.springmvc.config" />
     <context:component-scan base-package="org.fullstack4.springmvc.service" />
+    <context:component-scan base-package="org.fullstack4.springmvc.filter" />
 
 </beans>

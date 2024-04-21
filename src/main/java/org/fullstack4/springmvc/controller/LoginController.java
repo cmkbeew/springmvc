@@ -6,6 +6,7 @@ import org.checkerframework.checker.units.qual.C;
 import org.fullstack4.springmvc.dto.LoginDTO;
 import org.fullstack4.springmvc.dto.MemberDTO;
 import org.fullstack4.springmvc.service.LoginServiceIf;
+import org.fullstack4.springmvc.util.CookieUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,12 +33,13 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public void loginGET(HttpServletRequest req, Model model) {
         // 아이디 저장 했을 때
-        for(Cookie cookie : req.getCookies()) {
-            if(cookie.getName().equals("save_cookie")) {
-                model.addAttribute("save_id", cookie.getValue());
-            }
-        }
-        
+
+        String save_id = CookieUtil.getCookieValue("save_id", req);
+        String auto_login = CookieUtil.getCookieValue("auto_login", req);
+
+        model.addAttribute("save_id", save_id);
+        model.addAttribute("auto_login", auto_login);
+
         String acc_url = req.getHeader("referer");
 
         model.addAttribute("acc_url", acc_url);
@@ -70,11 +72,14 @@ public class LoginController {
 
             // 아이디 저장 -> 쿠키에 아이디 저장
             if(loginDTO.getSave_id() != null) {
-                Cookie save_cookie = new Cookie("save_cookie", loginMemberDTO.getUser_id());
-                save_cookie.setMaxAge(60*60*24*7);
-                save_cookie.setPath("/");
-                
-                res.addCookie(save_cookie);
+                CookieUtil.setCookies("save_id", loginMemberDTO.getUser_id(), 60*60*24*7, res);
+            } else {
+                CookieUtil.deleteCookie("save_id", null, 0, res);
+            }
+
+            // 자동 로그인 확인
+            if(loginDTO.getAuto_login() != null) {
+                CookieUtil.setCookies("auto_login", loginMemberDTO.getUser_id(), 60*60*24*7, res);
             }
 
             return "redirect:" + acc_url;
