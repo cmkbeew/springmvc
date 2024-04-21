@@ -6,27 +6,6 @@
     <title>로그인 페이지</title>
     <meta charset="UTF-8"/>
 </head>
-<%--<body>--%>
-<%--<h1>Login</h1>--%>
-
-<%--<form name="frmLogin" id="frmLogin" action="/login/login" method="post">--%>
-<%--    <div>--%>
-<%--        <div><span>아이디 : <input type="text" name="user_id" id="user_id" value="${user_id}" /></span></div>--%>
-<%--        <div id="div_err_user_id" style="display: none"></div>--%>
-<%--        <div><span>비밀번호 : <input type="text" name="pwd" id="pwd" value="" /></span></div>--%>
-<%--        <div id="div_err_pwd" style="display: none"></div>--%>
-
-<%--        <span>아이디 저장  <input type="checkbox" name="save_id" id="save_id" value="" /></span>--%>
-<%--        <span>자동 로그인  <input type="checkbox" name="auto_login" id="auto_login" value="" /></span>--%>
-
-<%--        <div>--%>
-<%--            <button type="submit" id="btnLogin">로그인</button>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</form>--%>
-
-
-
 <body>
 <div id="snippetContent">
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
@@ -45,7 +24,7 @@
 													<span class="input-group-addon">
 														<i class="fa fa-user"></i>
 													</span>
-                                    <input type="text" class="form-control" name="user_id" id="user_id" value="${loginDTO.user_id}" placeholder="ID">
+                                    <input type="text" class="form-control" name="user_id" id="user_id" value="<c:out value='${save_id != null ? save_id : loginDTO.user_id}' />" placeholder="ID">
                                 </div>
                                 <div id="div_err_user_id" style="display: none"></div>
 
@@ -57,9 +36,17 @@
                                 </div>
                                 <div id="div_err_pwd" style="display: none"></div>
 
+                                <div class="d-flex justify-content-evenly">
+                                    <div><input type="checkbox" name="save_id" id="save_id" <c:if test="${save_id != null}">checked</c:if> />아이디 저장</div>
+                                    <div><input type="checkbox" name="auto_login" id="auto_login" />자동 로그인</div>
+                                </div>
+
+                                <c:if test="${login_err_msg != null}">
+                                    <div style="color:red;">${login_err_msg}</div>
+                                </c:if>
+
                                 <div class="row mt-3">
                                     <div class="col-6">
-<%--                                        <button type="button" id="btnLogin" class="btn btn-primary px-4">Login</button>--%>
                                         <button type="submit" id="btnLogin" class="btn btn-primary px-4">Login</button>
                                     </div>
                                     <div class="col-6 text-right">
@@ -73,7 +60,7 @@
                         <div class="card-body text-center">
                             <div>
                                 <h2 class="mb-4">Sign up</h2>
-                                <p>To use the service,<br> You must register as a member.</p>
+                                <p>To use our service,<br> You must register as our member.</p>
                                 <button type="button" class="btn btn-primary active mt-3" onclick="location.href='/member/join'">Register Now!</button>
                             </div>
                         </div>
@@ -85,7 +72,6 @@
 
     <script>
         const serverValidResult = {};
-        console.log("${errors}")
         <c:forEach items="${errors}" var="err">
         if(document.getElementById("div_err_${err.getField()}") != null) {
             document.getElementById("div_err_${err.getField()}").innerHTML = "<span style='color:red;'> ${err.defaultMessage}</span>";

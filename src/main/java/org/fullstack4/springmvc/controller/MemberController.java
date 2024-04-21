@@ -27,19 +27,13 @@ public class MemberController {
     @GetMapping("/view")
     public void view(@RequestParam(name="user_id", defaultValue = "") String user_id,
                      Model model) {
-        log.info("============================");
-        log.info("MemberController >> view()");
-        log.info("user_id :" + user_id);
-        log.info("============================");
+        MemberDTO memberDTO = memberServiceIf.view(user_id);
 
-        model.addAttribute("user_id", user_id);
+        model.addAttribute("memberDTO", memberDTO);
     }
 
     @GetMapping("/join")
     public void joinGET() {
-        log.info("============================");
-        log.info("MemberController >> joinGET()");
-        log.info("============================");
     }
 
     @PostMapping("/join")
@@ -53,39 +47,62 @@ public class MemberController {
 
             return "redirect:/member/join";
         }
-        log.info("============================");
-        log.info("MemberController >> joinPOST()");
-        log.info("memberDTO :" + memberDTO.toString());
 
+        boolean duplicate_id_check = memberServiceIf.duplicateId(memberDTO.getUser_id());
 
-        int result = memberServiceIf.join(memberDTO);
-
-        log.info("============================");
-        if(result > 0) {
-            return "redirect:/login/login";
+        if(duplicate_id_check) {
+            int result = memberServiceIf.join(memberDTO);
+            if(result > 0) {
+                return "redirect:/login/login";
+            } else {
+                return "/member/join";
+            }
         } else {
-            return "/member/join";
+            redirectAttributes.addFlashAttribute("duplicate_error", "이미 존재하는 아이디입니다.");
+            redirectAttributes.addFlashAttribute("memberDTO", memberDTO);
+
+            return "redirect:/member/join";
         }
     }
 
     @GetMapping("/modify")
-    public void modifyGET() {
-        log.info("============================");
-        log.info("MemberController >> modifyGET()");
-        log.info("============================");
+    public void modifyGET(@RequestParam(name="user_id", defaultValue = "") String user_id,
+                          Model model) {
+        MemberDTO memberDTO = memberServiceIf.view(user_id);
+
+        model.addAttribute("memberDTO", memberDTO);
     }
 
     @PostMapping("/modify")
-    public void modifyPOST() {
-        log.info("============================");
-        log.info("MemberController >> modifyPOST()");
-        log.info("============================");
+    public String modifyPOST(@Valid MemberDTO memberDTO,
+                             BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes) {
+        if(bindingResult.hasErrors()) {
+            log.info("Errors");
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            redirectAttributes.addFlashAttribute("memberDTO", memberDTO);
+
+            return "redirect:/member/modify?user_id=" + memberDTO.getUser_id();
+        }
+        int result = memberServiceIf.modify(memberDTO);
+
+        if(result > 0) {
+            return "redirect:/member/view?user_id=" + memberDTO.getUser_id();
+        } else {
+            return "/member/modify?user_id=" + memberDTO.getUser_id();
+        }
+
     }
 
-    @PostMapping("/leave")
-    public void leavePOST() {
-        log.info("============================");
-        log.info("MemberController >> leavePOST()");
-        log.info("============================");
+    @PostMapping("/delete")
+    public String deletePOST(String user_id) {
+
+        int result = memberServiceIf.delete(user_id);
+
+        if(result > 0) {
+            return "redirect:/";
+        } else {
+            return "/member/view?user_id=" + user_id;
+        }
     }
 }

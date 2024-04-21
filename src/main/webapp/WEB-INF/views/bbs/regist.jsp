@@ -13,8 +13,8 @@
     <form name="frmRegist" id="frmRegist" method="post" action="/bbs/regist">
         <div class="mb-3">
             <label for="user_id" class="form-label">아이디</label>
-            <input type="text" class="form-control" id="user_id" name="user_id" value="${bbs.user_id}" placeholder="아이디" >
-            <div id="div_err_user_id" style="display: none"></div>
+            <input type="text" class="form-control" id="user_id" name="user_id" value="${sessionScope.loginInfo.user_id}" readonly />
+            <div id="div_err_user_id" style="display: none;"></div>
         </div>
 
         <div class="mb-3">
@@ -30,7 +30,7 @@
         </div>
 
         <div class="mb-3">
-            <span>출력날짜 : </span> <input type="date" name="display_date" id="display_date" value="${bbs.display_date}" />
+            <span>출력일자 : </span> <input type="date" name="display_date" id="display_date" value="${bbs.display_date}" />
             <div id="div_err_display_date" style="display: none;"></div>
         </div>
 
@@ -48,6 +48,7 @@
             <input type="checkbox" class="btn-check" id="interest_3" name="interest" value="음악" <c:out value="${bbs.interest.contains(\"음악\") ? 'checked' : ''}"></c:out>>
             <label class="btn btn-outline-dark" for="interest_3">음악</label>
         </div>
+        <div id="div_err_interest" style="display: none;"></div>
         <div class="d-grid gap-2">
             <button class="btn btn-primary" type="submit">글 등록</button>
             <button class="btn btn-secondary" type="button" onclick="location.href='/bbs/list'">게시판 목록</button>
@@ -59,7 +60,7 @@
     const serverValidResult = {};
     <c:forEach items="${errors}" var="err">
     if(document.getElementById("div_err_${err.getField()}") != null) {
-        document.getElementById("div_err_${err.getField()}").innerHTML = "<span style='color:red;'>${err.getField()}필드는 ${err.defaultMessage}</span>";
+        document.getElementById("div_err_${err.getField()}").innerHTML = "<span style='color:red;'>${err.defaultMessage}</span>";
         document.getElementById("div_err_${err.getField()}").style.display = "block";
     }
     serverValidResult['${err.getField()}'] = '${err.defaultMessage}';

@@ -21,7 +21,7 @@
     </style>
 </head>
 <body>
-<div class="container-lg mt-3">
+<div class="container mt-3" style="width: 70%">
     <div id="top">
         <h1 class="mb-5">게시판 목록</h1>
         <div class="mb-3">

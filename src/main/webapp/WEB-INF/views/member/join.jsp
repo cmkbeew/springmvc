@@ -21,10 +21,13 @@
                                     <label for="user_id">아이디</label>
                                     <input class="form-control form-control-lg" type="text" name="user_id" id="user_id" value="${memberDTO.user_id}" placeholder="Enter your ID">
                                     <div id="div_err_user_id" style="display: none"></div>
+                                    <c:if test="${duplicate_error != null}">
+                                        <div id="duplicate_check" style="color:red">${duplicate_error}</div>
+                                    </c:if>
                                 </div>
                                 <div class="form-group">
                                     <label for="pwd">비밀번호</label>
-                                    <input class="form-control form-control-lg" type="password" name="pwd" id="pwd" placeholder="Enter your Password">
+                                    <input class="form-control form-control-lg" type="password" name="pwd" id="pwd" value="${memberDTO.pwd}" placeholder="Enter your Password">
                                     <div id="div_err_pwd" style="display: none"></div>
                                 </div>
                                 <div class="form-group">

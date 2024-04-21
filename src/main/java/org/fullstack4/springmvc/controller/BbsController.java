@@ -24,25 +24,17 @@ public class BbsController {
 
     @GetMapping("/list")
     public void list(Model model) {
-        log.info("============================");
-        log.info("BbsController >> list()");
         List<BbsDTO> bbsList = bbsServiceIf.list();
 
         model.addAttribute("bbsList", bbsList);
-        log.info("============================");
     }
 
     @GetMapping("/view")
     public void view(@RequestParam(name="idx", defaultValue = "0") int idx,
                      Model model) {
-        log.info("============================");
-        log.info("BbsController >> view()");
-        log.info("idx :" + idx);
-
         BbsDTO bbsDTO = bbsServiceIf.view(idx);
 
         model.addAttribute("bbsDTO", bbsDTO);
-        log.info("============================");
     }
 
     @GetMapping("/regist")
@@ -57,21 +49,12 @@ public class BbsController {
                              BindingResult bindingResult,
                              RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()) {
-            log.info("Errors");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             redirectAttributes.addFlashAttribute("bbs", bbsDTO);
 
             return "redirect:/bbs/regist";
         }
-
-        log.info("============================");
-        log.info("BbsController >> registPOST()");
-        log.info("bbsDTO :" + bbsDTO.toString());
-
         int result = bbsServiceIf.regist(bbsDTO);
-
-        log.info("result :" + result);
-        log.info("============================");
 
         if(result > 0) {
             return "redirect:/bbs/list";
@@ -85,21 +68,21 @@ public class BbsController {
     @GetMapping("/modify")
     public void modifyGET(@RequestParam(name = "idx", defaultValue = "0") int idx,
                           Model model) {
-        log.info("============================");
-        log.info("BbsController >> modifyGET()");
-        log.info("============================");
-
         BbsDTO bbsDTO = bbsServiceIf.view(idx);
+
         model.addAttribute("bbsDTO", bbsDTO);
     }
 
     @PostMapping("/modify")
-    public String modifyPOST(BbsDTO bbsDTO,
-                             Model model) {
-        log.info("============================");
-        log.info("BbsController >> modifyPOST()");
-        log.info("============================");
+    public String modifyPOST(@Valid BbsDTO bbsDTO,
+                             BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes) {
+        if(bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            redirectAttributes.addFlashAttribute("bbs", bbsDTO);
 
+            return "redirect:/bbs/modify?idx=" + bbsDTO.getIdx();
+        }
         int result = bbsServiceIf.modify(bbsDTO);
 
         if(result > 0) {
@@ -111,10 +94,6 @@ public class BbsController {
 
     @PostMapping("/delete")
     public String deletePOST(@RequestParam(name = "idx", defaultValue = "0") int idx) {
-        log.info("============================");
-        log.info("BbsController >> deletePOST()");
-        log.info("============================");
-
         int result = bbsServiceIf.delete(idx);
 
         if(result > 0) {

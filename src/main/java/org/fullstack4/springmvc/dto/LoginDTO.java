@@ -13,9 +13,12 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class LoginDTO {
 
-    @NotBlank
+    @NotBlank(message = "아이디를 입력하세요.")
     private String user_id;
 
-    @NotBlank
+    @NotBlank(message = "비밀번호를 입력하세요.")
     private String pwd;
+
+    private String save_id;
+    private String auto_save;
 }

@@ -16,7 +16,7 @@ public class BbsVO {
     private String user_id;
     private String title;
     private String content;
-    private String display_date;
+    private LocalDate display_date;
     private int read_cnt;
     private LocalDate reg_date;
     private LocalDate modify_date;

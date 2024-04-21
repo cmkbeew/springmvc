@@ -13,7 +13,7 @@
         <input type="hidden" name="idx" id="idx" value="${bbsDTO.idx}" />
         <div class="mb-3">
             <label for="user_id" class="form-label">아이디</label>
-            <input type="text" class="form-control" id="user_id" name="user_id" value="${bbsDTO.user_id}" placeholder="아이디" >
+            <input type="text" class="form-control" id="user_id" name="user_id" value="${bbsDTO.user_id}" placeholder="아이디" readonly>
             <div id="div_err_user_id" style="display: none"></div>
         </div>
 
@@ -48,11 +48,24 @@
             <input type="checkbox" class="btn-check" id="interest_3" name="interest" value="음악" <c:out value="${bbsDTO.interest.contains(\"음악\") ? 'checked' : ''}"></c:out>>
             <label class="btn btn-outline-dark" for="interest_3">음악</label>
         </div>
+        <div id="div_err_interest" style="display: none;"></div>
         <div class="d-grid gap-2">
             <button class="btn btn-primary" type="submit">수정하기</button>
             <button class="btn btn-secondary" type="button" onclick="location.href='/bbs/view?idx=${bbsDTO.idx}'">뒤로가기</button>
         </div>
     </form>
 </div>
+<script>
+    const serverValidResult = {};
+    <c:forEach items="${errors}" var="err">
+    if(document.getElementById("div_err_${err.getField()}") != null) {
+        document.getElementById("div_err_${err.getField()}").innerHTML = "<span style='color:red;'>${err.defaultMessage}</span>";
+        document.getElementById("div_err_${err.getField()}").style.display = "block";
+    }
+    serverValidResult['${err.getField()}'] = '${err.defaultMessage}';
+    </c:forEach>
+
+    console.log(serverValidResult);
+</script>
 </body>
 </html>

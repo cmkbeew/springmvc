@@ -17,20 +17,13 @@ public class LoginServiceImpl implements LoginServiceIf {
     private final ModelMapper modelMapper;
     @Override
     public MemberDTO login_info(String user_id, String pwd) {
-        log.info("========================");
-        log.info("LoginServiceImpl >> login_info()");
-
         MemberVO memberVO = loginXmlMapper.login_info(user_id, pwd);
-        log.info("LoginServiceImpl >> login_info() >> memberVO : " + memberVO.toString());
 
         MemberDTO memberDTO = null;
 
         if(memberVO != null && memberVO.getPwd().equals(pwd)) {
             memberDTO = modelMapper.map(memberVO, MemberDTO.class);
-
-            log.info("LoginServiceImpl >> login_info >> memberDTO : " + memberDTO.toString());
         }
-        log.info("========================");
 
         return memberDTO;
     }

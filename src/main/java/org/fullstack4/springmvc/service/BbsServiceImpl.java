@@ -21,28 +21,26 @@ public class BbsServiceImpl implements BbsServiceIf {
 
     @Override
     public int regist(BbsDTO bbsDTO) {
-        log.info("============================");
-        log.info("BbsServiceImpl >> regist(bbsDTO) : " + bbsDTO);
-
         BbsVO bbsVO = modelMapper.map(bbsDTO, BbsVO.class);
         int result = bbsMapper.regist(bbsVO);
-        log.info("BbsServiceImpl >> bbsVO : " + bbsVO);
-        log.info("BbsServiceImpl >> result : " + result);
-
-        log.info("============================");
 
         return result;
     }
 
     @Override
     public List<BbsDTO> list() {
-        log.info("============================");
-        log.info("BbsServiceImpl >> list() : ");
-        log.info("============================");
-
         List<BbsDTO> bbsDTOList = bbsMapper.list().stream()
                                                 .map(vo -> modelMapper.map(vo, BbsDTO.class))
                                                 .collect(Collectors.toList());
+
+        // 보여지는 내용 길이 설정
+        for(BbsDTO dto : bbsDTOList) {
+            dto.setContent(dto.getContent().replace("\r\n", " "));
+            if(dto.getContent().length() >= 30) {
+                dto.setContent(dto.getContent().substring(0, 30) + ".....");
+            }
+        }
+
         return bbsDTOList;
     }
 
@@ -57,10 +55,6 @@ public class BbsServiceImpl implements BbsServiceIf {
 
     @Override
     public int modify(BbsDTO bbsDTO) {
-        log.info("============================");
-        log.info("BbsServiceImpl >> modify()");
-        log.info("============================");
-
         BbsVO bbsVO = modelMapper.map(bbsDTO, BbsVO.class);
 
         int result = bbsMapper.modify(bbsVO);

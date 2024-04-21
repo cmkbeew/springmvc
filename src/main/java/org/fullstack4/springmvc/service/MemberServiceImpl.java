@@ -18,14 +18,46 @@ public class MemberServiceImpl implements MemberServiceIf {
 
     @Override
     public int join(MemberDTO memberDTO) {
-        log.info("====================");
-        log.info("MemberServiceImpl >> join >> memberDTO : " + memberDTO);
         MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
 
-        log.info("MemberServiceImpl >> join >> memberVO : " + memberVO);
-        log.info("====================");
         int result = memberMapper.join(memberVO);
 
         return result;
+    }
+
+    @Override
+    public MemberDTO view(String user_id) {
+        MemberVO memberVO = memberMapper.view(user_id);
+
+        MemberDTO memberDTO = modelMapper.map(memberVO, MemberDTO.class);
+
+        return memberDTO;
+    }
+
+    @Override
+    public int modify(MemberDTO memberDTO) {
+        MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
+
+        int result = memberMapper.modify(memberVO);
+
+        return result;
+    }
+
+    @Override
+    public int delete(String user_id) {
+        int result = memberMapper.delete(user_id);
+
+        return result;
+    }
+
+    @Override
+    public boolean duplicateId(String user_id) {
+        String save_id = memberMapper.duplicateId(user_id);
+
+        if(save_id != null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

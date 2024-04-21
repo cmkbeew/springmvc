@@ -9,4 +9,32 @@
         VALUES (#{user_id}, #{pwd}, #{name}, #{email}, #{birthday}, #{interest}, #{addr1}, #{addr2}, NOW())
     </insert>
 
+    <select id="view" resultType="org.fullstack4.springmvc.domain.MemberVO">
+        SELECT user_id, name, pwd, email, jumin, addr1, addr2, birthday, interest, jobCode, mileage, user_state,
+               reg_date, modify_date, leave_date, pwd_change_date
+        FROM tbl_member
+        WHERE user_id = #{user_id}
+    </select>
+
+    <update id="modify">
+        UPDATE tbl_member SET
+        name = #{name},
+        email = #{email},
+        addr1 = #{addr1},
+        addr2 = #{addr2},
+        birthday = #{birthday},
+        interest = #{interest}
+        WHERE user_id = #{user_id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM tbl_member
+        WHERE user_id = #{user_id}
+    </delete>
+    
+    <select id="duplicateId">
+        SELECT user_id
+        FROM tbl_member
+        WHERE user_id = #{user_id}
+    </select>
 </mapper>
