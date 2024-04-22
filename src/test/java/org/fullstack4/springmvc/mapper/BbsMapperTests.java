@@ -1,10 +1,8 @@
-package org.fullstack4.springmvc.service;
+package org.fullstack4.springmvc.mapper;
 
 import lombok.extern.log4j.Log4j2;
-import org.fullstack4.springmvc.dto.BbsDTO;
+import org.fullstack4.springmvc.domain.BbsVO;
 import org.fullstack4.springmvc.dto.PageRequestDTO;
-import org.fullstack4.springmvc.dto.PageResponseDTO;
-import org.fullstack4.springmvc.mapper.BbsMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,23 +14,10 @@ import java.util.List;
 @Log4j2
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/root-context.xml")
-public class BbsServiceImplTests {
+public class BbsMapperTests {
 
-    @Autowired
-    private BbsServiceIf bbsServiceIf;
-
-    @Test
-    public void testRegist() {
-        BbsDTO bbsDTO = BbsDTO.builder()
-                .user_id("test")
-                .title("제목 테스트3")
-                .content("내용 테스트3")
-//                .display_date("2024-04-11")
-                .read_cnt(0)
-                .build();
-
-        int result = bbsServiceIf.regist(bbsDTO);
-    }
+    @Autowired(required = false)
+    private BbsMapper bbsMapper;
 
     @Test
     public void testBbsTotalCount() {
@@ -41,26 +26,43 @@ public class BbsServiceImplTests {
 //                .page_size(10)
                 .build();
 
-        int total_count = bbsServiceIf.bbsTotalCount(requestDTO);
+        int total_count = bbsMapper.bbsTotalCount(requestDTO);
 
         log.info("===============================");
-        log.info("testBbsTotalCount - ServiceImpl : " + total_count);
+        log.info("testBbsTotalCount : " + total_count);
         log.info("===============================");
     }
 
     @Test
     public void testBbsListByPage() {
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
-                .page(1)
+                .page(5)
                 .page_size(10)
                 .build();
 
-        PageResponseDTO<BbsDTO> pageResponseDTO = bbsServiceIf.bbsListByPage(pageRequestDTO);
+        List<BbsVO> bbsList = bbsMapper.bbsListByPage(pageRequestDTO);
 
         log.info("===============================");
-        log.info("testBbsTotalCount >> testBbsListByPage : ");
-        pageResponseDTO.getDtoList().forEach(vo -> log.info(vo));
+        bbsList.forEach(list -> log.info(list));
         log.info("===============================");
     }
 
+    @Test
+    public void testBbsListBySearch() {
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+                .page(1)
+                .page_size(10)
+                .search_type(new String[]{"t", "u"})
+                .search_word("테스트")
+                .build();
+
+        int total_count = bbsMapper.bbsTotalCount(pageRequestDTO);
+
+        List<BbsVO> bbsList = bbsMapper.bbsListByPage(pageRequestDTO);
+
+        log.info("===============================");
+        log.info("total_count : " + total_count);
+        bbsList.forEach(list -> log.info(list));
+        log.info("===============================");
+    }
 }

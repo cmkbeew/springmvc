@@ -40,8 +40,10 @@
         </form>
     </div>
     <div class="d-grid gap-2 d-md-block mb-3" style="margin: 0 auto;">
-        <button type="button" class="btn btn-outline-success" onclick="location.href='/bbs/modify?idx=${bbsDTO.idx}'">수정</button>
-        <button type="button" class="btn btn-outline-danger" onclick="goDelete()">삭제</button>
+        <c:if test="${bbsDTO.user_id eq sessionScope.user_id}">
+            <button type="button" class="btn btn-outline-success" onclick="location.href='/bbs/modify?idx=${bbsDTO.idx}'">수정</button>
+            <button type="button" class="btn btn-outline-danger" onclick="goDelete()">삭제</button>
+        </c:if>
         <button type="button" class="btn btn-outline-secondary" onclick="location.href='/bbs/list'">목록</button>
     </div>
 </div>

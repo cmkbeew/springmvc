@@ -21,7 +21,7 @@ public class CookieUtil {
 
         if(cookies != null) {
             for(Cookie c : cookies) {
-                if(name.equals(c.getName())) {
+                if(c.getName().equals(name)) {
                     value = c.getValue();
                     break;
                 }

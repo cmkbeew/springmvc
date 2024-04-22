@@ -13,7 +13,7 @@
     <form name="frmRegist" id="frmRegist" method="post" action="/bbs/regist">
         <div class="mb-3">
             <label for="user_id" class="form-label">아이디</label>
-            <input type="text" class="form-control" id="user_id" name="user_id" value="${sessionScope.loginInfo.user_id}" readonly />
+            <input type="text" class="form-control" id="user_id" name="user_id" value="${sessionScope.user_id}" readonly />
             <div id="div_err_user_id" style="display: none;"></div>
         </div>
 

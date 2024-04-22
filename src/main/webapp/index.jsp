@@ -22,8 +22,8 @@
 <div class="cover-container w-50 mx-auto my-5">
     <main class="px-3">
         <c:choose>
-            <c:when test="${loginInfo != null}">
-                <h1>${loginInfo.name}님 환영합니다.</h1>
+            <c:when test="${user_id != null}">
+                <h1>${name}님 환영합니다.</h1>
                 <p class="lead">
                     방문해주셔서 감사합니다.
                 </p>

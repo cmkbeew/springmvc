@@ -21,11 +21,11 @@
         </ul>
 
         <div class="col-md-3 text-end">
-            <c:if test="${sessionScope.loginInfo.user_id != null}">
+            <c:if test="${sessionScope.user_id != null}">
                 <button type="button" class="btn btn-outline-primary me-2" onclick="location.href='/login/logout'">Logout</button>
-                <button type="button" class="btn btn-primary" onclick="location.href='/member/view?user_id=${sessionScope.loginInfo.user_id}'">MyPage</button>
+                <button type="button" class="btn btn-primary" onclick="location.href='/member/view?user_id=${sessionScope.user_id}'">MyPage</button>
             </c:if>
-            <c:if test="${sessionScope.loginInfo.user_id == null}">
+            <c:if test="${sessionScope.user_id == null}">
                 <button type="button" class="btn btn-outline-primary me-2" onclick="location.href='/login/login'">Login</button>
                 <button type="button" class="btn btn-primary" onclick="location.href='/member/join'">Sign-up</button>
             </c:if>
