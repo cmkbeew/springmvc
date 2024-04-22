@@ -43,15 +43,16 @@ public class PageResponseDTO<E> {
         this.page = requestDTO.getPage();
         this.page_size = requestDTO.getPage_size();
         this.page_skip_count = requestDTO.getPage_skip_count();
-        this.total_page = requestDTO.getTotal_page();
+        this.total_page = (int)Math.ceil(total_count / (double)page_size);
         this.page_block_size = requestDTO.getPage_block_size();
-        this.page_block_start = (int)(Math.ceil(this.page / (double)this.page_block_size) -1 ) * 10 + 1;
-        this.page_block_end = (int)Math.ceil(this.page / (double)this.page_block_size) * 10 > this.total_page ? this.total_page : this.page_block_end;
+        this.page_block_start = (int)(Math.ceil(page / (double)page_block_size) -1 ) * 10 + 1;
+        this.page_block_end = (int)Math.ceil(page / (double)page_block_size) * 10;
+        this.page_block_end = page_block_end > total_page ? total_page : page_block_end;
         this.prev_page_flag = (this.page_block_start > 1);
         this.next_page_flag = (this.total_page > this.page_block_end);
         this.dtoList = dtoList;
 
-        this.linkParams = "?page_size = " + this.page_size;
+        this.linkParams = "?page_size=" + this.page_size;
 
         log.info("PageResponseDTO END");
         log.info("=======================");

@@ -31,7 +31,7 @@ public class BbsController {
                      Model model) {
         log.info("===========================");
         log.info("BbsController >> list() START");
-//        log.info("pageRequestDTO : " + pageRequestDTO.toString());
+        log.info("pageRequestDTO : " + pageRequestDTO.toString());
 
         if(bindingResult.hasErrors()) {
             log.info("BbsController >> list Error");

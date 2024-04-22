@@ -18,18 +18,8 @@ public class PageRequestDTO {
 
     @Builder.Default
     @PositiveOrZero
-    @Min(value = 0)
-    private int total_count = 0;
-
-    @Builder.Default
-    @PositiveOrZero
     @Min(value = 1)
-    private int first_page = 1;
-
-    @Builder.Default
-    @PositiveOrZero
-    @Min(value = 1)
-    private int page = 15;
+    private int page = 1;
 
     @Builder.Default
     @PositiveOrZero
@@ -38,28 +28,13 @@ public class PageRequestDTO {
 
     @Builder.Default
     @PositiveOrZero
-    @Min(value = 1)
-    private int total_page = 1;
-
-    @Builder.Default
-    @PositiveOrZero
     @Min(value = 0)
-    private int page_skip_count = 10;
+    private int page_skip_count = 0;
 
     @Builder.Default
     @PositiveOrZero
     @Min(value = 1)
     private int page_block_size = 10;
-
-    @Builder.Default
-    @PositiveOrZero
-    @Min(value = 1)
-    private int page_block_start = 1;
-
-    @Builder.Default
-    @PositiveOrZero
-    @Min(value = 1)
-    private int page_block_end = 1;
 
     // 검색 조건
     private String[] search_type;
@@ -71,16 +46,4 @@ public class PageRequestDTO {
     public int getPage_skip_count() {
         return ((this.page-1) * this.page_size);
     }
-
-    public int getTotal_page() {
-        return (int)Math.ceil(total_count / (double)page_size);
-    }
-
-//    public int getPage_block_start() {
-//        return (int)(Math.ceil(page / (double)page_block_size) -1 ) * 10 + 1;
-//    }
-//
-//    public int getPage_block_end() {
-//        return ((int)Math.ceil(page / (double)page_block_size) * 10) > total_page ? total_page : page_block_end;
-//    }
 }
