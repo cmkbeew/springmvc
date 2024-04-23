@@ -83,7 +83,6 @@ public class BbsServiceImpl implements BbsServiceIf {
     @Override
     public PageResponseDTO<BbsDTO> bbsListByPage(PageRequestDTO pageRequestDTO) {
         List<BbsVO> voList = bbsMapper.bbsListByPage(pageRequestDTO);
-        log.info("Impl >> voList : " + voList);
 
         List<BbsDTO> dtoList = voList.stream()
                                      .map(vo -> modelMapper.map(vo, BbsDTO.class))

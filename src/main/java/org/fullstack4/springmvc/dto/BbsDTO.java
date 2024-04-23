@@ -45,4 +45,9 @@ public class BbsDTO {
 
     @NotBlank(message = "관심사항을 선택하세요.")
     private String interest;
+
+    @Builder.Default
+    @PositiveOrZero
+    @Min(value = 0)
+    private int reply_cnt = 0;
 }

@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.PositiveOrZero;
+import java.time.LocalDate;
 
 @Log4j2
 @Data
@@ -15,35 +16,54 @@ import javax.validation.constraints.PositiveOrZero;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PageRequestDTO {
-
     @Builder.Default
     @PositiveOrZero
-    @Min(value = 1)
-    private int page = 1;
-
+    @Min(value=0)
+    private int total_count=0;
     @Builder.Default
     @PositiveOrZero
-    @Min(value = 1)
-    private int page_size = 10;
-
+    @Min(value=1)
+    private int first_page=1;
     @Builder.Default
     @PositiveOrZero
-    @Min(value = 0)
-    private int page_skip_count = 0;
-
+    @Min(value=1)
+    private int page=1;
     @Builder.Default
     @PositiveOrZero
-    @Min(value = 1)
-    private int page_block_size = 10;
+    @Min(value=1)
+    private int page_size=10;
+    @Builder.Default
+    @PositiveOrZero
+    @Min(value=1)
+    private int total_page=1;
+    @Builder.Default
+    @PositiveOrZero
+    @Min(value=0)
+    private int page_skip_count=0;
+    @Builder.Default
+    @PositiveOrZero
+    @Min(value=1)
+    private int page_block_size=5;
+    @Builder.Default
+    @PositiveOrZero
+    @Min(value=1)
+    private int page_block_start=1;
+    @Builder.Default
+    @PositiveOrZero
+    @Min(value=1)
+    private int page_block_end=1;
 
     // 검색 조건
     private String[] search_type;
     private String search_word;
-    private String search_date1;
-    private String search_date2;
+    private LocalDate search_date1;
+    private LocalDate search_date2;
 
 
+    public void setTotal_count(int total_count) {
+        this.total_count = total_count;
+    }
     public int getPage_skip_count() {
-        return ((this.page-1) * this.page_size);
+        return (this.page-1)*this.page_size;
     }
 }

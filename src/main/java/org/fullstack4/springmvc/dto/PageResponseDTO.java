@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Log4j2
@@ -27,8 +28,8 @@ public class PageResponseDTO<E> {
     // 검색 조건
     private String[] search_type;
     private String search_word;
-    private String search_date1;
-    private String search_date2;
+    private LocalDate search_date1;
+    private LocalDate search_date2;
 
     private String linkParams;
 
@@ -45,14 +46,38 @@ public class PageResponseDTO<E> {
         this.page_skip_count = requestDTO.getPage_skip_count();
         this.total_page = (int)Math.ceil(total_count / (double)page_size);
         this.page_block_size = requestDTO.getPage_block_size();
-        this.page_block_start = (int)(Math.ceil(page / (double)page_block_size) -1 ) * 10 + 1;
-        this.page_block_end = (int)Math.ceil(page / (double)page_block_size) * 10;
+        this.page_block_start = (int)(Math.ceil(page / (double)page_block_size) -1 ) * page_block_size + 1;
+        this.page_block_end = (int)Math.ceil(page / (double)page_block_size) * page_block_size;
         this.page_block_end = page_block_end > total_page ? total_page : page_block_end;
         this.prev_page_flag = (this.page_block_start > 1);
         this.next_page_flag = (this.total_page > this.page_block_end);
+
         this.dtoList = dtoList;
 
-        this.linkParams = "?page_size=" + this.page_size;
+        this.search_type = requestDTO.getSearch_type();
+
+        StringBuilder sb = new StringBuilder();
+        if(search_type != null) {
+            for(String type : search_type) {
+                sb.append("&search_type=" + type);
+            }
+        }
+
+        this.search_word = requestDTO.getSearch_word();
+        this.search_date1 = requestDTO.getSearch_date1();
+        this.search_date2 = requestDTO.getSearch_date2();
+
+        if(search_word != null) {
+            sb.append("&search_word=" + search_word);
+        }
+        if(search_date1 != null) {
+            sb.append("&search_date1=" + search_date1);
+        }
+        if(search_date2 != null) {
+            sb.append("&search_date2=" + search_date2);
+        }
+
+        this.linkParams = "?page_size=" + this.page_size + sb;
 
         log.info("PageResponseDTO END");
         log.info("=======================");

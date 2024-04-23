@@ -10,11 +10,19 @@ import org.fullstack4.springmvc.service.BbsServiceIf;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 @Log4j2
 @Controller
@@ -39,6 +47,7 @@ public class BbsController {
         }
 
         PageResponseDTO<BbsDTO> responseDTO = bbsServiceIf.bbsListByPage(pageRequestDTO);
+
         model.addAttribute("responseDTO", responseDTO);
 
         log.info("responseDTO : " + responseDTO);
@@ -125,4 +134,79 @@ public class BbsController {
         }
     }
 
+    @GetMapping("/fileUpload")
+    public String fileUploadGET() {
+        return "/bbs/fileUpload";
+    }
+
+    @PostMapping("/fileUpload")
+    public String fileUploadPOST(@RequestParam("file") MultipartFile multipartFile) {
+        String uploadFolder = "D:\\java4\\uploads";
+        String fileRealName = multipartFile.getOriginalFilename();
+        long size = multipartFile.getSize();
+        String ext = fileRealName.substring(fileRealName.lastIndexOf("."), fileRealName.length());
+
+        log.info("========================");
+        log.info("uploadFolder : " + uploadFolder);
+        log.info("fileRealName : " + fileRealName);
+        log.info("size : " + size);
+        log.info("ext : " + ext);
+
+        // 새로운 파일명 생성
+        UUID uuid = UUID.randomUUID();
+        String[] uuids = uuid.toString().split("-");
+        String newName = uuids[0];
+
+        log.info("uuid : " + uuid);
+        log.info("uuids : " + uuids);
+        log.info("newName : " + newName);
+
+        File saveFile = new File(uploadFolder + "\\" + newName + ext);
+
+        log.info("saveFile : " + saveFile);
+
+        try {
+            multipartFile.transferTo(saveFile);
+        } catch(IllegalStateException e) {
+            e.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        log.info("========================");
+
+        return "/bbs/fileUpload";
+    }
+
+    @PostMapping("/fileUpload2")
+    public String fileUploadPOST2(MultipartHttpServletRequest files) {
+        String uploadFolder = "D:\\java4\\uploads";
+
+        List<MultipartFile> list = files.getFiles("files");
+
+        for(int i=0; i<list.size(); i++) {
+            String fileRealName = list.get(i).getOriginalFilename();
+            long size = list.get(i).getSize();
+            String ext = fileRealName.substring(fileRealName.lastIndexOf("."), fileRealName.length());
+
+            log.info("fileRealName : " + fileRealName);
+            log.info("size : " + size);
+            log.info("ext : " + ext);
+
+            UUID uuid = UUID.randomUUID();
+            String[] uuids = uuid.toString().split("-");
+            String newName = uuids[0];
+
+            File saveFile = new File(uploadFolder + "\\" + newName + ext);
+
+            try {
+                list.get(i).transferTo(saveFile);
+            } catch(IllegalStateException e) {
+                e.printStackTrace();
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return "/bbs/fileUpload";
+    }
 }

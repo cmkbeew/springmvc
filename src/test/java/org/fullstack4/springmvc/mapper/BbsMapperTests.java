@@ -36,8 +36,10 @@ public class BbsMapperTests {
     @Test
     public void testBbsListByPage() {
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
-                .page(5)
+                .page(1)
                 .page_size(10)
+                .search_type(new String[]{"t", "u"})
+                .search_word("테스트")
                 .build();
 
         List<BbsVO> bbsList = bbsMapper.bbsListByPage(pageRequestDTO);
