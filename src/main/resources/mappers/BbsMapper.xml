@@ -30,13 +30,13 @@
     </insert>
 
     <select id="list" resultType="org.fullstack4.springmvc.domain.BbsVO">
-        SELECT idx, user_id, title, content, display_date, read_cnt, reg_date, modify_date, interest
+        SELECT idx, user_id, title, content, display_date, read_cnt, reg_date, modify_date, interest, reply_cnt
         FROM tbl_bbs
         ORDER BY idx DESC
     </select>
 
     <select id="view" resultType="org.fullstack4.springmvc.domain.BbsVO">
-        SELECT idx, user_id, title, content, display_date, read_cnt, reg_date, modify_date, interest
+        SELECT idx, user_id, title, content, display_date, read_cnt, reg_date, modify_date, interest, reply_cnt
         FROM tbl_bbs
         WHERE idx=#{idx}
     </select>

@@ -4,8 +4,10 @@ package org.fullstack4.springmvc.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.springmvc.dto.BbsDTO;
+import org.fullstack4.springmvc.dto.BbsReplyDTO;
 import org.fullstack4.springmvc.dto.PageRequestDTO;
 import org.fullstack4.springmvc.dto.PageResponseDTO;
+import org.fullstack4.springmvc.service.BbsReplyServiceIf;
 import org.fullstack4.springmvc.service.BbsServiceIf;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +33,7 @@ import java.util.UUID;
 public class BbsController {
 
     private final BbsServiceIf bbsServiceIf;
+    private final BbsReplyServiceIf bbsReplyServiceIf;
 
     @GetMapping("/list")
     public void list(@Valid PageRequestDTO pageRequestDTO,
@@ -64,8 +67,11 @@ public class BbsController {
     public void view(@RequestParam(name="idx", defaultValue = "0") int idx,
                      Model model) {
         BbsDTO bbsDTO = bbsServiceIf.view(idx);
+        List<BbsReplyDTO> bbsReplyList = bbsReplyServiceIf.reply_list(idx);
 
+        log.info("bbsDTO : " + bbsDTO);
         model.addAttribute("bbsDTO", bbsDTO);
+        model.addAttribute("bbsReplyList", bbsReplyList);
     }
 
     @GetMapping("/regist")
@@ -93,7 +99,6 @@ public class BbsController {
 
             return "/bbs/regist";
         }
-
     }
 
     @GetMapping("/modify")

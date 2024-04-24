@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <html>
@@ -28,11 +29,23 @@
             <div class="d-flex justify-content-center align-items-center">
                 <div class="mx-5 my-3">
                     <span>검색 범위 : </span>
-                    <input class="form-check-input" type="checkbox" value="t" id="search_type_0" name="search_type" >
+                    <input class="form-check-input" type="checkbox" value="t" id="search_type_0" name="search_type"
+                        <c:forEach items="${responseDTO.search_type}" var="dto">
+                               <c:if test ="${fn:contains(dto,'t' )}">
+                                    checked
+                               </c:if>
+                        </c:forEach>
+                    >
                     <label class="form-check-label" for="search_type_0">
                         제목
                     </label>
-                    <input class="form-check-input" type="checkbox" value="u" id="search_type_1" name="search_type" >
+                    <input class="form-check-input" type="checkbox" value="u" id="search_type_1" name="search_type"
+                        <c:forEach items="${responseDTO.search_type}" var="dto">
+                        <c:if test ="${fn:contains(dto,'t' )}">
+                               checked
+                        </c:if>
+                        </c:forEach>
+                    >
                     <label class="form-check-label" for="search_type_1">
                         작성자
                     </label>

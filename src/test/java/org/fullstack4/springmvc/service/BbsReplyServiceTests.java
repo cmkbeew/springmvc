@@ -20,12 +20,10 @@ public class BbsReplyServiceTests {
     public void testBbsReplyRegist() {
         BbsReplyDTO bbsReplyDTO = BbsReplyDTO.builder()
                                             .bbs_idx(214)
-                                            .user_id("test3")
-                                            .title("댓글 서비스 테스트")
+                                            .user_id("test")
+                                            .title("댓글 작성 서비스 테스트ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ")
                                             .build();
 
-        int result = bbsReplyServiceIf.reply_regist(bbsReplyDTO);
-
-        log.info("result : " + result);
+        bbsReplyServiceIf.reply_regist(bbsReplyDTO);
     }
 }

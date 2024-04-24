@@ -11,5 +11,5 @@ public interface BbsReplyServiceIf {
 
     int update_reply_cnt(int bbs_idx);
 
-    List<BbsReplyDTO> reply_list();
+    List<BbsReplyDTO> reply_list(int bbs_idx);
 }
